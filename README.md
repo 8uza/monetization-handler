@@ -34,34 +34,81 @@ Edit `Config` (ModuleScript inside `ShopInitializer`):
 
 Register callbacks and initialize (server-side, in `ShopInitializer`):
 
-	local Shop = require(script:WaitForChild("Shop"))
+```lua
+local Shop = require(script:WaitForChild("Shop"))
 
-	Shop:SetupProductPurchase("Coins100", function(player, receiptInfo)
-		-- give the player 100 coins
-		return true -- mark the purchase as handled
-	end)
+Shop:SetupProductPurchase("Coins100", function(player, receiptInfo)
+    -- give the player 100 coins
+    return true -- mark the purchase as handled
+end)
 
-	Shop:SetupGamePassPurchase("VIP", function(player, receiptInfo)
-		-- grant VIP perks
-		return true
-	end)
+Shop:SetupGamePassPurchase("VIP", function(player, receiptInfo)
+    -- grant VIP perks
+    return true
+end)
 
-	Shop:Initialize()
+Shop:Initialize()
+```
 
 Prompt a purchase from the client:
 
-	local remote = game.ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Prompt")
-	remote:FireServer("product", "Coins100")  -- or "gamepass", "VIP"
+```lua
+local remote = game.ReplicatedStorage
+    :WaitForChild("Remotes")
+    :WaitForChild("Prompt")
+
+remote:FireServer("product", "Coins100") -- or "gamepass", "VIP"
+```
 
 ## API
 
-- `Shop:SetupProductPurchase(name, callback)` – register a Developer Product handler
-- `Shop:SetupGamePassPurchase(name, callback)` – register a Game Pass handler
-- `Shop:PromptProductPurchase(player, name)` – server-side product prompt
-- `Shop:PromptGamePassPurchase(player, name)` – server-side Game Pass prompt
-- `Shop:PlayerOwnsGamePass(player, name)` – check Game Pass ownership
-- `Shop:GetProductId(name)` / `Shop:GetGamePassId(name)` – look up asset IDs
-- `Shop:Initialize()` – start the system (call after all setups)
+### Register a Developer Product
+
+```lua
+Shop:SetupProductPurchase(name, callback)
+```
+
+### Register a Game Pass
+
+```lua
+Shop:SetupGamePassPurchase(name, callback)
+```
+
+### Prompt a Developer Product Purchase
+
+```lua
+Shop:PromptProductPurchase(player, name)
+```
+
+### Prompt a Game Pass Purchase
+
+```lua
+Shop:PromptGamePassPurchase(player, name)
+```
+
+### Check Game Pass Ownership
+
+```lua
+Shop:PlayerOwnsGamePass(player, name)
+```
+
+### Get a Developer Product ID
+
+```lua
+Shop:GetProductId(name)
+```
+
+### Get a Game Pass ID
+
+```lua
+Shop:GetGamePassId(name)
+```
+
+### Initialize the Framework
+
+```lua
+Shop:Initialize()
+```
 
 ## Structure
 
